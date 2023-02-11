@@ -1,3 +1,5 @@
+
+
 #include <mrm-8x8a.h>
 #include <mrm-col-can.h>
 #include <mrm-fet-can.h>
@@ -20,7 +22,7 @@ RobotLine::RobotLine(char name[]) : Robot(name) {
   // 2nd, 4th, 6th, and 8th parameters are output connectors of the controller (0 - 3, meaning 1 - 4. connector). 2nd one must be connected to LB (Left-Back) motor,
   // 4th to LF (Left-Front), 6th to RF (Right-Front), and 8th to RB (Right-Back). Therefore, You can connect motors freely, but have to
   // adjust the parameters here. In this example output (connector) 3 is LB, etc.
-  motorGroup = new MotorGroupDifferential(this, mrm_mot4x3_6can, 0, mrm_mot4x3_6can, 2, mrm_mot4x3_6can, 1, mrm_mot4x3_6can, 3);
+  motorGroup = new MotorGroupDifferential(this, mrm_mot4x3_6can, 0, mrm_mot4x3_6can, 1, mrm_mot4x3_6can, 2, mrm_mot4x3_6can, 3);
 
   // All the actions will be defined here; the objects will be created.
   actionEvacuationZone = new ActionEvacuationZone(this);
@@ -1394,15 +1396,15 @@ void RobotLine::followWallRight() {
   armOpen();
 
   if (front() < 150) {
-    go(-90, 90);
+    go(-90, 110);
     delayMs(500);
   }
-  else if (frontRight() < 100) {
-    go(50, 60);
+  else if (frontRight() < 115) {
+    go(50, 70);
   }
 
   else {
-    go(60, 50);
+    go(70, 50);
 
   }
 
@@ -1416,38 +1418,141 @@ void RobotLine::followWallLeft() {
     go(90, -90);
     delayMs(500);
   }
-  else if(front() >1100 ){
-    go(180, -180);
+  else if (front() < 300 and frontRight() < 800 and frontLeft() > 200 and not frontLeft() >900) {
+    go(-90, 90);
     delayMs(500);
   }
-  else if (frontLeft() < 100) {
-    go(60, 50);
+  else if (front() < 300 and frontRight() > 300 and frontLeft() > 900 and not frontLeft() < 800) {
+    go(90, -90);
+    delayMs(500);
+  }
+  else if (frontLeft() < 115) {
+    go(70, 50);
   }
   else {
-    go(50, 60);
+    go(50, 70);
 
   }
 
 
 
 }
-void RobotLine::followWall() {
-  if (frontLeft() > 250 and frontRight() > 250){
-    
-go(10, 20);
-delayMs(90);
+void RobotLine::followWallFast() {
+  armOpen();
+  
+  if (frontLeft() > 250 and frontRight() > 250) {
+
+    go(100, 100);
+    delayMs(90);
   }
-  
-  
+
+
   else if (frontRight() < frontLeft()) {
     followWallRight();
   }
-  else if (lineAny()){
+  else if ( frontLeft() < 150 and frontRight() < 150) {
+    go(100, 110);
+  }
+  else if (lineAny()) {
+    go( 60, 60);
+    delayMs(250);
+    go( 360, -360);
+    delayMs(2000);
+    go( -360, 360);
+    delayMs(2000);
     stop();
     end();
   }
   else {
     followWallLeft();
+  }
+
+
+
+}
+
+
+
+
+
+
+void RobotLine::followWall() {
+  armOpen();
+  
+  if (frontLeft() > 250 and frontRight() > 250) {
+
+    go(60, 60);
+    delayMs(90);
+  }
+
+
+  else if (frontRight() < frontLeft()) {
+    followWallRightFast();
+  }
+  else if ( frontLeft() < 150 and frontRight() < 150) {
+    go(100, 110);
+  }
+  else if (lineAny()) {
+    go( 60, 60);
+    delayMs(250);
+    go( 360, -360);
+    delayMs(2000);
+    go( -360, 360);
+    delayMs(2000);
+    stop();
+    end();
+  }
+  else {
+    followWallLeftFast();
+  }
+
+
+
+}
+
+
+void RobotLine::followWallLeftFast() {
+  armOpen();
+
+  if (front() < 150) {
+    go(90, -90);
+    delayMs(500);
+  }
+  else if (front() < 300 and frontRight() < 800 and frontLeft() > 200 and not frontLeft() >900) {
+    go(-90, 90);
+    delayMs(500);
+  }
+  else if (front() < 300 and frontRight() > 300 and frontLeft() > 900 and not frontLeft() < 800) {
+    go(90, -90);
+    delayMs(500);
+  }
+  else if (frontLeft() < 115) {
+    go(110, 90);
+  }
+  else {
+    go(90, 110);
+
+  }
+
+
+
+}
+
+
+void RobotLine::followWallRightFast() {
+  armOpen();
+
+  if (front() < 150) {
+    go(-90, 110);
+    delayMs(500);
+  }
+  else if (frontRight() < 115) {
+    go(90, 110);
+  }
+
+  else {
+    go(110, 90);
+
   }
 
 
