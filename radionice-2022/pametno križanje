@@ -28,24 +28,26 @@ void RobotLine::radionica()
   }
 
   else if ( not lineAny() and krizanje1 == 1) {
+    go(90, -90);
+    delayMs(600);
+    lineFollow();
+    if (line(8) and line(0)) {
+      stop();
+      delayMs(500);
+      krizanje1 = 2;
+    }
 
-    go(-60, -60);
-    delayMs(2500);
+  }
+
+
+
+
+
+
+  if (line(0) and line(8) and krizanje1 == 2) { // ovo radi to
     stop();
     delayMs(500);
-    krizanje1 = 2;
-  }
-
-
-  if (krizanje1 == 2) {
-    lineFollow();
-  }
-
-
-  if (line(0) and line(8) and krizanje1 == 2) { // ovo radi to 
-    go(60, 60);
-    delayMs(200);
-    go(90, -90);
+    go(-90, 90);
     delayMs(500);
     stop();
     delayMs(500);
@@ -62,14 +64,18 @@ void RobotLine::radionica()
   }
 
   else if ( not lineAny() and krizanje1 == 3) {
-    go(-60, -60);
-    delayMs(500);
     stop();
     delayMs(500);
+    go(90, -90);
+    delayMs(600);
     krizanje1 = 4;
   }
+
+  else if (krizanje1 == 4) {
+    if(line(8) and line(0)){
+    go(90, 90);
+    delayMs(800);
+    lineFollow();
+    }
+  }
 }
-
-
-
-
