@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "helper.h"
 
 
@@ -10,16 +10,21 @@ void RobotLine::radionica()
   char simbol[10 + sizeof(char)];
 
 
-
-  if ( not lineAny() and not broj <= 6) {
+//nema linije
+  if ( not lineAny() and broj >= 2 and broj <= 5) {
     stop();
     delayMs(100);
-    go(0, 25);
+    go(0, 30);
     delayMs(500);
     go(50, 50);
     delayMs(500);
     broj++;
   }
+//križanje1
+if(broj == 1 and line(7)){
+  broj++;
+}
+  
   if (line(0) and line(8) and broj == 0) {
     go (-90, 90);
     delayMs(500);
@@ -27,51 +32,43 @@ void RobotLine::radionica()
   }
 
 
-  if (line(0) and line(8) and broj == 5) {
+//križanje 2
+
+  if (line(0) and line(8) and broj == 6) {
     stop();
     delayMs(500);
     go (-90, 90);
     delayMs(1000);
     broj ++;
   }
-
-  if (line(5) and line(8) and not line(0) ) {
-    go (-90, 90);
-    delayMs(500);
-  }
-
-
   
-  
-
-  
-  if (line(7) and broj == 4) {
+  if (line(7) and broj == 5) {
     go (90, 90);
     delayMs(500);
     broj++;
   }
 
-  if ( line(8) and broj == 6) {
+  if ( line(8) and broj == 7) {
     go(90, -90);
     delayMs(500);
     broj ++;
   }
 
-
-  if ( broj == 8 or broj == 10 and line(1) and line(7)) {
+//most
+  if ( broj == 8 or broj == 9 and line(1) and line(7)) {
     go (90, 90);
     delayMs(500);
     broj++;
   }
 
-    if ( broj == 11 and not lineAny()) {
+    if ( broj == 10 and not lineAny()) {
     go (90, 90);
     delayMs(500);
     broj++;
   }
 
 
-
+//broj
   lineFollow();
   sprintf(simbol, "%d", broj);
   display(simbol);
