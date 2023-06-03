@@ -1,0 +1,135 @@
+#pragma once
+#include "helper.h"
+
+
+void RobotLine::radionica()
+{
+  static int krizanje1 = 0;
+  static int kraj = 0;
+
+  char simbol[10 + sizeof(char)];
+
+
+
+
+  if (krizanje1 == 0) {
+    lineFollow();
+  }
+
+  if (krizanje1 == 5 and not lineAny()) {
+    if (krizanje1 == 5 and not lineAny()) {
+      kraj = 1;
+    }
+
+  }
+
+
+
+  if (krizanje1 == 4 and line(1) and line(7)) {
+    stop();
+    end();
+    go(-90, 90);
+    delayMs(500);
+    lineFollow();
+    krizanje1 = 5;
+  }
+
+
+
+
+  if (kraj == 1) {
+    stop();
+    delayMs(50);
+    go(127, 127);
+    delayMs(500);
+    go(90, -90);
+    delayMs(500);
+    go(90, -90);
+    delayMs(500);
+    go(-90, 90);
+    delayMs(500);
+    go(-90, 90);
+    delayMs(500);
+    stop();
+    end();
+  }
+
+
+  if (line(0) and line(8) and krizanje1 == 0) {
+    stop();
+    delayMs(100);
+    go(90, -90);
+    delayMs(350);
+    go(127, 127);
+    delayMs(25);
+    krizanje1 = 1;
+    lineFollow();
+  }
+  else if (lineAny() and krizanje1 == 1) {
+
+    lineFollow();
+
+  }
+
+  else if ( not lineAny() and krizanje1 == 1) {
+    go(90, -90);
+    delayMs(600);
+    lineFollow();
+    if (line(8) and line(0)) {
+      stop();
+      delayMs(500);
+      krizanje1 = 3;
+    }
+
+  }
+
+
+
+
+  if (krizanje1 == 5) {
+    lineFollow();
+  }
+
+
+  if (line(0) and line(8) and krizanje1 == 1) { // ovo radi to
+    stop();
+    delayMs(50);
+    go(10, 50);
+    delayMs(250);
+    go(120, 120);
+    delayMs(250);
+    stop();
+    delayMs(50);
+    go(60, 60);
+    delayMs(500);
+    lineFollow();
+    krizanje1 = 3;
+  }
+
+  else if (lineAny() and krizanje1 == 3) { // ovo radi nešto drugo
+
+    lineFollow();
+
+  }
+
+  else if ( not lineAny() and krizanje1 == 3) {
+    stop();
+    delayMs(50);
+    go(90, -90);
+    delayMs(500);
+    go(90, -90);
+    delayMs(500);
+    go(80, 80);
+    delayMs(15);
+    lineFollow();
+    krizanje1 = 4;
+  }
+
+
+
+
+
+
+  sprintf(simbol, "%d", krizanje1);
+  display(simbol);
+}
