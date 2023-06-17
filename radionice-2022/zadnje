@@ -1,0 +1,43 @@
+#pragma once
+#include "helper.h"
+
+
+void RobotLine::radionica()
+{
+
+  static int trazi = false;
+
+  if (setup()) {
+    armOpen();
+  }
+
+     armClose();
+    if (frontLeft() > frontRight()) {
+      go(50, -50);
+      delayMs(500);
+    }
+
+    if (frontLeft() < frontRight()) {
+      go(-50, 50);
+      delayMs(500);
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
